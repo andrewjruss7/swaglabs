@@ -1,0 +1,15 @@
+[
+  {
+    "test": "login success",
+    "username": "standard_user",
+    "password": "secret_sauce",
+    "expected": "Products"
+  },
+
+  {
+    "test": "login locked",
+    "username": "locked_out_user",
+    "password": "secret_sauce",
+    "expected": "Epic sadface: Sorry, this user has been locked out."
+  }
+]
