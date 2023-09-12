@@ -10,4 +10,13 @@ Cypress.Commands.add('loginSuccess', () => {
     loginPage.password().type(user[0].password)
     loginPage.buttonLogin().click()
     inventoryPage.assertInventoryTittle().should('be.visible', user.expected)
-})
+});
+
+Cypress.Commands.add('addProducts', () => {
+    const inventoryPage = new InventoryPage();
+    inventoryPage.getProductsCount().then((initialProductCount) => {
+        inventoryPage.clickOnAllButtons();
+        inventoryPage.getProductsCount().should('be.gte', initialProductCount + 1);
+    });
+    inventoryPage.clickCartButton();
+});

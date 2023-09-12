@@ -18,5 +18,8 @@
   "homepage": "https://github.com/andrewjruss7/swaglabs#readme",
   "devDependencies": {
     "cypress": "^13.1.0"
+  },
+  "dependencies": {
+    "axios": "^1.5.0"
   }
 }

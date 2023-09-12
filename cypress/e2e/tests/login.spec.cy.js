@@ -7,7 +7,10 @@ describe('Login', () => {
     const homePage = new HomePage()
 
     beforeEach(() => {
-        cy.visit('https://www.saucedemo.com/v1/index.html')
+        cy.visit(Cypress.env('baseUrl'));
+        cy.window().then((win) => {
+            win.sessionStorage.clear()
+        });
     })
 
     const users = require('../../fixtures/users.json')
