@@ -4,9 +4,6 @@ describe('Cart', () => {
 
     beforeEach(() => {
         cy.visit(Cypress.env('baseUrl'));
-        cy.window().then((win) => {
-            win.sessionStorage.clear()
-        });
         cy.loginSuccess();
     });
 

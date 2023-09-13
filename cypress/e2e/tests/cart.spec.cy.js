@@ -7,16 +7,13 @@ describe('Cart', () => {
 
     beforeEach(() => {
         cy.visit(Cypress.env('baseUrl'));
-        cy.window().then((win) => {
-            win.sessionStorage.clear()
-        });
         cy.loginSuccess();
         cy.addProducts();
     });
 
-    it('click checkout button', () => {
+    it('Click checkout button', () => {
         cartPage.scrollDown();
         cartPage.clickCheckoutButton();
-        checkoutPage.assertCheckoutTittle().should('be.visible', 'Checkout: Your Information');
+        checkoutPage.assertCheckoutTittle();
     });
 });
