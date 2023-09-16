@@ -13,5 +13,15 @@ describe('Cart', () => {
             inventoryPage.getProductsCount().should('be.gte', initialProductCount + 1);
         });
         inventoryPage.clickCartButton();
+
     });
+
+    it('add products three to cart', () => {
+        inventoryPage.getProductsthree();
+        inventoryPage.clickCartButton();
+        inventoryPage.assertInventoryCart();
+        
+    })
+
+    
 });

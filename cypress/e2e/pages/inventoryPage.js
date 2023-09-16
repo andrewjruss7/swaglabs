@@ -21,11 +21,28 @@ class InventoryPage {
             const count = parseInt(text.trim());
             return isNaN(count) ? 0 : count;
         });
+
+
+    };
+    getProductsthree() {
+        return cy.get('[class="btn_primary btn_inventory"]')
+        .each(($btn, index) => {if (index === 0 || index === 3 || index === 5) 
+        {cy.wrap($btn).click()}});
+
+    };    
+
+    assertInventoryCart() {
+    return cy.get('[class="fa-layers-counter shopping_cart_badge"]').contains(3);
+        
     };
 
     clickCartButton() {
         return cy.get(this.cartItemCount).click();
     };
+
+
+
 }
+
 
 export default InventoryPage
