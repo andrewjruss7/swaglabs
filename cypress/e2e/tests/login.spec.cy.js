@@ -20,8 +20,17 @@ describe('Login', () => {
 
             if (user.test === 'login success') {
                 inventoryPage.assertInventoryTittle().should('be.visible', user.expected)
-            } else {
+            } 
+            else if (user.test === 'login locked') {
                 homePage.alertErrorLogin().should('be.visible', user.expected)
+            }
+            else if (user.test === 'login problem') {
+                inventoryPage.testButtonOperation();
+                cy.log('Mensaje:', user.expected);
+            }
+            else if (user.test === 'login performance_glitch') {
+                inventoryPage.testPerformanceInventory();
+                cy.log('Mensaje:', user.expected);
             }
         })
     })

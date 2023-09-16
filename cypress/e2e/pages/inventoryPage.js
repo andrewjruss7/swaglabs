@@ -52,6 +52,38 @@ class InventoryPage {
         return cy.get(this.cartItemCount).click();
     };
 
+    testButtonOperation () {
+        return cy.get('[class="btn_primary btn_inventory"]')
+        .each(($boton, index) => {   
+            cy.wrap($boton).click()})
+        .then(() => {
+            let alMenosUnBotonNoCambio = false;
+            cy.get('[class="pricebar"] button')
+            .each(($boton) => {
+                if ($boton.text() !== 'REMOVE') {
+                    alMenosUnBotonNoCambio = true;
+                }
+            })
+            .then(() => {
+                expect(alMenosUnBotonNoCambio).to.be.true;
+            });
+        })
+    }
+    testPerformanceInventory () {
+        const tiempoAntes = Date.now()
+        
+        cy.then(() => {
+            cy.contains('Products')
+            .then(() => {
+                const tiempoDespues = Date.now();
+                
+                const tiempoTranscurrido = tiempoDespues - tiempoAntes;
+                const tiempoEsperado = 4000;
+                expect(tiempoTranscurrido).to.be.greaterThan(tiempoEsperado);
+            })
+        })
+    }
+
 
 
 }
