@@ -36,6 +36,18 @@ class InventoryPage {
         
     };
 
+    getProductsfour() {
+        return cy.get('[class="btn_primary btn_inventory"]')
+        .each(($btn, index) => {if (index === 1 || index === 4) 
+        {cy.wrap($btn).click()}});
+
+    };  
+    assertInventoryCartfour() {
+        return cy.get('[class="fa-layers-counter shopping_cart_badge"]').contains(2);
+            
+        };
+
+
     clickCartButton() {
         return cy.get(this.cartItemCount).click();
     };

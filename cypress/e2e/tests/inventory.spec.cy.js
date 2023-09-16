@@ -23,5 +23,13 @@ describe('Cart', () => {
         
     })
 
+    it('add products four to cart', () => {
+       inventoryPage.getProductsfour();
+       inventoryPage.clickCartButton();
+       inventoryPage.assertInventoryCartfour();
+       
+
+    })
+
     
 });
