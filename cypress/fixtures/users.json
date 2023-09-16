@@ -11,5 +11,19 @@
     "username": "locked_out_user",
     "password": "secret_sauce",
     "expected": "Epic sadface: Sorry, this user has been locked out."
+  },
+
+  {
+    "test": "login problem",
+    "username": "problem_user",
+    "password": "secret_sauce",
+    "expected": "Algunos botones no permiten agregar producto."
+  },
+
+  {
+    "test": "login performance_glitch",
+    "username": "performance_glitch_user",
+    "password": "secret_sauce",
+    "expected": "La pagina de Inventory tarda mas tiempo de lo esperado para cargar."
   }
 ]
