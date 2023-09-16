@@ -18,7 +18,7 @@ describe('Login', () => {
             loginPage.password().type(user.password)
             loginPage.buttonLogin().click()
 
-            if (user.test === 'login success') {
+            if (user[0].test === 'login success') {
                 inventoryPage.assertInventoryTittle().should('be.visible', user.expected)
             } 
             else if (user.test === 'login locked') {
