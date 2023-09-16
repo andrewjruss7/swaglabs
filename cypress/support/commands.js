@@ -32,3 +32,4 @@ Cypress.Commands.add('clickCartButton', () => {
     cartPage.clickCheckoutButton();
     checkoutPage.assertCheckoutTittle().should('be.visible', 'Checkout: Your Information');
 });
+
