@@ -13,13 +13,13 @@ describe('Cart', {scrollBehavior: false}, () => {
         cy.addProducts();
     });
 
-    it('Click checkout button', () => {
+    it('Check that products are added to the cart at checkout', () => {
         cartPage.scrollDown();
         cartPage.clickCheckoutButton();
         checkoutPage.assertCheckoutTittle();
     });
 
-    it('Assert products', () => {
+    it('Check that the products added are the same as those in the cart', () => {
         const products = require('../../fixtures/products.json');
 
         products.forEach((product) => {
@@ -27,40 +27,15 @@ describe('Cart', {scrollBehavior: false}, () => {
         });
     });
 
-    it.only('Validate total products', () => {
+    it.only('Check the value of the total products', () => {
         const products = require('../../fixtures/products.json');
 
         products.forEach((product) => {
             cartPage.productAdded(product.name, product.price);
         });
         cy.clickCartButton();
-        cy.wrap(api.fetchApiData()).then((apiData) => {
-            checkoutPage.firstName().type(apiData.firstName);
-            checkoutPage.lastName().type(apiData.lastName);
-            checkoutPage.postalCode().type(apiData.postalCode);
-            checkoutPage.clickButtonContinue();
-            cartPage.scrollDown();
-
-            const individualPrices = [];
-            let sumOfPrices = 0;
-            cy.get('.cart_item_label').each(($price) => {
-                const priceOfTheProduct = $price.find('.inventory_item_price').text();
-                const numericalPrice = parseFloat(priceOfTheProduct.replace('$', ''));
-
-                individualPrices.push(numericalPrice);
-            }).then(() => {
-                const sumIndivualPrices = individualPrices.reduce((acc, price) => acc + price, 0);
-                cy.get('.summary_subtotal_label').invoke('text').then((totalOnPage) => {
-                    if (totalOnPage.trim() !== '') {
-                        const numericTotal = parseFloat(totalOnPage.replace(/[^\d.]/g, ''))
-
-                        expect(sumIndivualPrices).to.equal(numericTotal)
-                        cy.log(`Sum of prices $${sumOfPrices.toFixed(2)}`);
-                    } else {
-                        cy.log('Total in Page is empty! :(')
-                    }
-                })
-            });
-        });
+        cy.insertCheckoutFormData();
+        cartPage.scrollDown();
+        cartPage.checkTotalValue();
     });
 });

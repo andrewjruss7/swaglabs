@@ -2,11 +2,15 @@ import LoginPage from "../e2e/pages/loginPage";
 import InventoryPage from "../e2e/pages/inventoryPage";
 import CartPage from "../e2e/pages/cartPage";
 import CheckoutPage from "../e2e/pages/checkoutPage";
-Cypress.Commands.add('loginSuccess', () => {
-    const loginPage = new LoginPage();
-    const inventoryPage = new InventoryPage();
+import api from "./apiUsers";
 
-    const user = require('../fixtures/users.json')
+const loginPage = new LoginPage();
+const inventoryPage = new InventoryPage();
+const checkoutPage = new CheckoutPage();
+const cartPage = new CartPage();
+Cypress.Commands.add('loginSuccess', () => {
+
+    const user = require('../fixtures/users.json');
 
     loginPage.username().type(user[0].username)
     loginPage.password().type(user[0].password)
@@ -15,8 +19,6 @@ Cypress.Commands.add('loginSuccess', () => {
 });
 
 Cypress.Commands.add('addProducts', () => {
-    const inventoryPage = new InventoryPage();
-
     inventoryPage.getProductsCount().then((initialProductCount) => {
         inventoryPage.clickOnAllButtons();
         inventoryPage.getProductsCount().should('be.gte', initialProductCount + 1);
@@ -25,11 +27,17 @@ Cypress.Commands.add('addProducts', () => {
 });
 
 Cypress.Commands.add('clickCartButton', () => {
-    const cartPage = new CartPage();
-    const checkoutPage = new CheckoutPage();
-
     cartPage.scrollDown();
     cartPage.clickCheckoutButton();
     checkoutPage.assertCheckoutTittle().should('be.visible', 'Checkout: Your Information');
 });
+
+Cypress.Commands.add('insertCheckoutFormData', () => {
+    cy.wrap(api.fetchApiData()).then((apiData) => {
+        checkoutPage.firstName().type(apiData.firstName);
+        checkoutPage.lastName().type(apiData.lastName);
+        checkoutPage.postalCode().type(apiData.postalCode);
+        checkoutPage.clickButtonContinue();
+    });
+})
 
