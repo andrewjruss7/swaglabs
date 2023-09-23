@@ -21,11 +21,11 @@ class InventoryPage {
             const count = parseInt(text.trim());
             return isNaN(count) ? 0 : count;
         });
-    };
+    }
 
     clickCartButton() {
         return cy.get(this.cartItemCount).click();
-    };
+    }
 
     testButtonOperation () {
         return cy.get('[class="btn_primary btn_inventory"]')
@@ -44,6 +44,7 @@ class InventoryPage {
             });
         })
     }
+
     testPerformanceInventory () {
         const tiempoAntes = Date.now()
         
@@ -58,6 +59,36 @@ class InventoryPage {
             })
         })
     }
+
+    selectFromAtoZ () {
+        return cy.get('[class="product_sort_container"]').select('Name (A to Z)');
+    } 
+    
+    selectFronZtoA () {
+        return cy.get('[class="product_sort_container"]').select('Name (Z to A)');
+    }
+    selectFronLowtoHigh () {
+        return cy.get('[class="product_sort_container"]').select('Price (low to high)');
+    }
+    selectFronHightoLow () {
+        return cy.get('[class="product_sort_container"]').select('Price (high to low)');
+    }
+
+    getProductNames() {
+        return cy.get('.inventory_item_name').invoke('text')
+    }
+
+    checkOrderProducts(productNames) {
+        const nombres = productNames.split('\n'); 
+        nombres.forEach((nombre, index) => {
+            if (index < nombres.length - 1) {
+                cy.wrap(nombre).should('not.be.greaterThan', nombres[index + 1]);
+            }
+        });
+    }
+
+
+
 }
 
 export default InventoryPage
