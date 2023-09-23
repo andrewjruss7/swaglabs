@@ -27,7 +27,7 @@ describe('Cart', {scrollBehavior: false}, () => {
         });
     });
 
-    it.only('Check the value of the total products', () => {
+    it('Check the value of the total products', () => {
         const products = require('../../fixtures/products.json');
 
         products.forEach((product) => {
