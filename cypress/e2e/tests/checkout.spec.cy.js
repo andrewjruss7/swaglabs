@@ -1,9 +1,11 @@
 import CheckoutPage from "../pages/checkoutPage";
 import CartPage from "../pages/cartPage";
 const api = require('../../support/apiUsers');
+
 describe('Checkout', () => {
     const checkoutPage = new CheckoutPage();
     const cartPage = new CartPage();
+
     beforeEach(() => {
         cy.visit(Cypress.env('baseUrl'));
         cy.loginSuccess();
@@ -11,15 +13,32 @@ describe('Checkout', () => {
         cy.clickCartButton();
     });
 
-    it('Checkout Finish', () => {
-        cy.wrap(api.fetchApiData()).then((apiData) => {
-            checkoutPage.firstName().type(apiData.firstName);
-            checkoutPage.lastName().type(apiData.lastName);
-            checkoutPage.postalCode().type(apiData.postalCode);
-            checkoutPage.clickButtonContinue();
-            cartPage.scrollDown();
-            checkoutPage.clickButtonFinish();
-            checkoutPage.assertFinishTittle();
+    const testCases = require('../../fixtures/checkout/escenarios.json')
+   
+
+    for (const testName in testCases) {
+        it(`Checkout - ${testName}`, () => {
+            const testCase = testCases[testName];
+            cy.wrap(api.fetchApiData()).then((apiData) => {
+                if (testCase.firstName)
+                    checkoutPage.firstName().type(apiData.firstName);
+
+                if (testCase.lastName) 
+                    checkoutPage.lastName().type(apiData.lastName);
+
+                if (testCase.postalCode) 
+                    checkoutPage.postalCode().type(apiData.postalCode);
+
+                checkoutPage.clickButtonContinue();
+
+                if (testCase.errorMessage) {
+                    checkoutPage.errorMenssage();
+                } else {
+                    cartPage.scrollDown();
+                    checkoutPage.clickButtonFinish();
+                    checkoutPage.assertFinishTittle();
+                }
+            });
         });
-    });
+    }
 });

@@ -1,0 +1,29 @@
+{
+    "Success": {
+      "firstName": true,
+      "lastName": true,
+      "postalCode": true,
+      "errorMessage": false
+    },
+    "ErrorFirstName": {
+      "firstName": false,
+      "lastName": true,
+      "postalCode": true,
+      "errorMessage": true
+    },
+    "ErrorLastName": {
+      "firstName": true,
+      "lastName": false,
+      "postalCode": true,
+      "errorMessage": true
+    },
+    "ErrorPostalCode": {
+      "firstName": true,
+      "lastName": true,
+      "postalCode": false,
+      "errorMessage": true
+    }
+  }
+  
+
+  

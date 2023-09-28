@@ -8,6 +8,10 @@ class CheckoutPage {
         this.buttonFinishContent = 'FINISH';
         this.tittleFinish = 'h2';
         this.tittleFinishContent = 'THANK YOU FOR YOUR ORDER';
+        this.tittleErrorFirstName = 'Error: First Name is required';
+        this.tittleErrorLastName = 'Error: Last Name is required';
+        this.tittleErrorPostalCode = 'Error: Postal Code is required'
+        
     };
 
     assertCheckoutTittle() {
@@ -31,6 +35,10 @@ class CheckoutPage {
         return this.getElement("postalCode")
     };
 
+    errorMenssage(){
+        return this.getElement("error")
+    };
+
     clickButtonContinue() {
         return cy.get(this.buttonContinue)
             .contains(this.buttonContinueContent)
@@ -47,7 +55,24 @@ class CheckoutPage {
         return cy.get(this.tittleFinish)
             .contains(this.tittleFinishContent)
             .should('be.visible')
+    };
+
+    assertErrorFirstName(){
+        return cy.contains(this.tittleErrorFirstName)
+        .should('be.visible')
+    };
+
+    assertErrorLastName(){
+        return cy.contains(this.tittleErrorLastName)
+        .should('be.visible')
+    };
+
+    assertErrorPostalCode(){
+        return cy.contains(this.tittleErrorPostalCode)
+        .should('be.visible')
     }
+
+
 }
 
 export default CheckoutPage;
