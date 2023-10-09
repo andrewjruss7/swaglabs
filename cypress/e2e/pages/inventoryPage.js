@@ -60,35 +60,53 @@ class InventoryPage {
         })
     }
 
-    selectFromAtoZ () {
-        return cy.get('[class="product_sort_container"]').select('Name (A to Z)');
-    } 
+    callSelector () {
+        return cy.get('[class="product_sort_container"]');
+    }
     
-    selectFronZtoA () {
-        return cy.get('[class="product_sort_container"]').select('Name (Z to A)');
-    }
-    selectFronLowtoHigh () {
-        return cy.get('[class="product_sort_container"]').select('Price (low to high)');
-    }
-    selectFronHightoLow () {
-        return cy.get('[class="product_sort_container"]').select('Price (high to low)');
+    checkOrderProductsByName(orderSelector) {
+        const namesList = [];
+                
+        return cy.get('.inventory_item_name').each(($element) => {
+            const list = $element.text().trim();
+            namesList.push(list);
+                            
+        }).then(() => {
+            const sortedList = [...namesList].sort((a, b) => {
+                if (orderSelector === 'asc') {
+                    return a.localeCompare(b, undefined, {sensitivity:'base'}); 
+                } else if (orderSelector === 'des') {
+                    return b.localeCompare(a, undefined, {sensitivity:'base'});
+                }
+            });            
+            expect(namesList).to.deep.equal(sortedList);
+
+            cy.log(...namesList);
+            cy.log(...sortedList);   
+        })
     }
 
-    getProductNames() {
-        return cy.get('.inventory_item_name').invoke('text')
+    checkOrderProductsByPrice(orderSelector) {
+        const pricesList = [];
+                
+        return cy.get('.inventory_item_price').each(($element) => {
+            const list = parseFloat($element.text().replace('$', '').trim());
+            pricesList.push(list);
+
+        }).then(() => {
+            let sortedList;
+
+            if (orderSelector === 'asc') {
+                sortedList = [...pricesList].sort((a, b) => a - b);}
+            else if(orderSelector === 'des') {
+                sortedList = [...pricesList].sort((a, b) => b - a);}      
+            
+            expect(pricesList).to.deep.equal(sortedList);
+
+            cy.log(...pricesList);
+            cy.log(...sortedList);
+        })
     }
-
-    checkOrderProducts(productNames) {
-        const nombres = productNames.split('\n'); 
-        nombres.forEach((nombre, index) => {
-            if (index < nombres.length - 1) {
-                cy.wrap(nombre).should('not.be.greaterThan', nombres[index + 1]);
-            }
-        });
-    }
-
-
-
 }
 
 export default InventoryPage
