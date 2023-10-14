@@ -21,7 +21,28 @@ class InventoryPage {
             const count = parseInt(text.trim());
             return isNaN(count) ? 0 : count;
         });
-    };
+    }
+    
+    clickOnFourRandomProducts() {
+        const numberOfProductsToSelect = 4;
+        cy.get(this.productSelector).then(($products) => {
+            const selectedIndices = [];
+            for (let i = 0; i < numberOfProductsToSelect; i++) {
+                let randomIndex;
+                do {
+                    randomIndex = Math.floor(Math.random() * $products.length);
+                } while (selectedIndices.includes(randomIndex));
+
+                selectedIndices.push(randomIndex);
+                cy.wrap($products[randomIndex]).find(this.addButonn).click();
+                
+            }
+        });
+    }
+
+    assertInventoryCart(expectedCount) {
+        cy.get(".shopping_cart_container").should(("exist"));
+    }
 
     clickCartButton() {
         return cy.get(this.cartItemCount).click();
@@ -59,5 +80,6 @@ class InventoryPage {
         })
     }
 }
+
 
 export default InventoryPage

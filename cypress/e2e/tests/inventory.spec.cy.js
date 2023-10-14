@@ -13,5 +13,12 @@ describe('Cart', () => {
             inventoryPage.getProductsCount().should('be.gte', initialProductCount + 1);
         });
         inventoryPage.clickCartButton();
+
+    });
+
+    it('Add products Random to card', () => {
+       inventoryPage.clickOnFourRandomProducts();
+       inventoryPage.assertInventoryCart();
+       inventoryPage.clickCartButton();
     });
 });
