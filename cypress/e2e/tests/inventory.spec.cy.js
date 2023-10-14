@@ -20,12 +20,5 @@ describe('Cart', () => {
        inventoryPage.clickOnFourRandomProducts();
        inventoryPage.assertInventoryCart();
        inventoryPage.clickCartButton();
-     
-
     });
-
-    
-
-    
 });
-

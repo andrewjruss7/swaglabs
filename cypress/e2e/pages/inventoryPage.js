@@ -38,8 +38,6 @@ class InventoryPage {
                 
             }
         });
-        
-    
     }
 
     assertInventoryCart(expectedCount) {
@@ -49,8 +47,6 @@ class InventoryPage {
     clickCartButton() {
         return cy.get(this.cartItemCount).click();
     };
-
-    
 
     testButtonOperation () {
         return cy.get('[class="btn_primary btn_inventory"]')
@@ -83,9 +79,6 @@ class InventoryPage {
             })
         })
     }
-
-
-
 }
 
 
