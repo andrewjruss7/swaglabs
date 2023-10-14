@@ -17,28 +17,21 @@ describe('Cart', () => {
 
     it('Verificar orden de productos de A a Z', () => {
         inventoryPage.callSelector().select('Name (A to Z)');
-        
         inventoryPage.checkOrderProductsByName();        
     })
 
     it('Verificar orden de productos de Z a A', () => {
-        
         inventoryPage.callSelector().select('Name (Z to A)');
-       
         inventoryPage.checkOrderProductsByName();  
     });
 
     it('Verificar orden de productos del precio mas bajo al mas alto', () => {
-        
         inventoryPage.callSelector().select('Price (low to high)');
-        
         inventoryPage.checkOrderProductsByPrice('asc');  
     });
 
     it('Verificar orden de productos de precio mas alto al mas bajo', () => {
-        
         inventoryPage.callSelector().select('Price (high to low)');
-        
         inventoryPage.checkOrderProductsByPrice('des');
     });    
 });
