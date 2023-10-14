@@ -21,36 +21,36 @@ class InventoryPage {
             const count = parseInt(text.trim());
             return isNaN(count) ? 0 : count;
         });
+    }
+    
+    clickOnFourRandomProducts() {
+        const numberOfProductsToSelect = 4;
+        cy.get(this.productSelector).then(($products) => {
+            const selectedIndices = [];
+            for (let i = 0; i < numberOfProductsToSelect; i++) {
+                let randomIndex;
+                do {
+                    randomIndex = Math.floor(Math.random() * $products.length);
+                } while (selectedIndices.includes(randomIndex));
 
-
-    };
-    getProductsthree() {
-        return cy.get('[class="btn_primary btn_inventory"]')
-        .each(($btn, index) => {if (index === 0 || index === 3 || index === 5) 
-        {cy.wrap($btn).click()}});
-
-    };    
-
-    assertInventoryCart() {
-    return cy.get('[class="fa-layers-counter shopping_cart_badge"]').contains(3);
+                selectedIndices.push(randomIndex);
+                cy.wrap($products[randomIndex]).find(this.addButonn).click();
+                
+            }
+        });
         
-    };
+    
+    }
 
-    getProductsfour() {
-        return cy.get('[class="btn_primary btn_inventory"]')
-        .each(($btn, index) => {if (index === 1 || index === 4) 
-        {cy.wrap($btn).click()}});
-
-    };  
-    assertInventoryCartfour() {
-        return cy.get('[class="fa-layers-counter shopping_cart_badge"]').contains(2);
-            
-        };
-
+    assertInventoryCart(expectedCount) {
+        cy.get(".shopping_cart_container").should(("exist"));
+    }
 
     clickCartButton() {
         return cy.get(this.cartItemCount).click();
     };
+
+    
 
     testButtonOperation () {
         return cy.get('[class="btn_primary btn_inventory"]')

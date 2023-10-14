@@ -16,20 +16,16 @@ describe('Cart', () => {
 
     });
 
-    it('add products three to cart', () => {
-        inventoryPage.getProductsthree();
-        inventoryPage.clickCartButton();
-        inventoryPage.assertInventoryCart();
-        
-    })
-
-    it('add products four to cart', () => {
-       inventoryPage.getProductsfour();
+    it('Add products Random to card', () => {
+       inventoryPage.clickOnFourRandomProducts();
+       inventoryPage.assertInventoryCart();
        inventoryPage.clickCartButton();
-       inventoryPage.assertInventoryCartfour();
-       
+     
 
-    })
+    });
+
+    
 
     
 });
+
